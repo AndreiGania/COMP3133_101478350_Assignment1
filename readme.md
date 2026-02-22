@@ -14,6 +14,10 @@ Course: COMP3133
 ---
 
 ## Project Setup
+## Sample test user 
+
+Email: test@test.com  
+Password: 123456
 
 ### 1) Install dependencies
 ```bash
