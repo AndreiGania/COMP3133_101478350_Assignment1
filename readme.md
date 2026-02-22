@@ -18,7 +18,7 @@ Course: COMP3133
 ### 1) Install dependencies
 ```bash
 npm install
-
+```
 ### 2) create env file
 ```bash
 PORT=4000
@@ -28,6 +28,7 @@ JWT_SECRET=your_secret_key
 CLOUD_NAME=your_cloudinary_cloud_name
 CLOUD_API_KEY=your_cloudinary_api_key
 CLOUD_API_SECRET=your_cloudinary_api_secret
+```
 
 
 ### 3) start server 
