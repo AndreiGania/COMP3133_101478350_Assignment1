@@ -2,6 +2,8 @@ const { gql } = require("apollo-server-express");
 
 const typeDefs = gql`
 
+  scalar Upload
+
   type User {
     id: ID!
     username: String!
@@ -50,7 +52,7 @@ const typeDefs = gql`
       salary: Float!
       date_of_joining: String!
       department: String!
-      employee_photo: String
+      employee_photo: Upload
     ): Employee
 
     updateEmployee(

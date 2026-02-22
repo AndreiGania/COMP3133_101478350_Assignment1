@@ -2,6 +2,7 @@ const User = require("../models/User");
 const Employee = require("../models/Employee");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const cloudinary = require("../config/cloudinary");
 
 const resolvers = {
   Query: {
@@ -108,8 +109,39 @@ const resolvers = {
       const existing = await Employee.findOne({ email: args.email });
       if (existing) throw new Error("Employee email already exists");
 
+      let photoUrl = null;
+
+if (args.employee_photo) {
+  const upload = await args.employee_photo;
+
+    const streamFactory =
+        upload.createReadStream ||
+        upload.file?.createReadStream ||
+        upload.promise?.createReadStream;
+
+    if (!streamFactory) {
+        throw new Error("Upload failed: createReadStream not available");
+    }
+
+    const uploadResult = await new Promise((resolve, reject) => {
+        const cloudStream = cloudinary.uploader.upload_stream(
+        { folder: "comp3133_assignment1_employees" },
+        (error, result) => {
+            if (error) return reject(error);
+            resolve(result);
+        }
+        );
+
+        streamFactory().pipe(cloudStream);
+    });
+
+    photoUrl = uploadResult.secure_url;
+    }
+      
+
       const employee = await Employee.create({
         ...args,
+        employee_photo: photoUrl,
         date_of_joining: new Date(args.date_of_joining),
       });
 
